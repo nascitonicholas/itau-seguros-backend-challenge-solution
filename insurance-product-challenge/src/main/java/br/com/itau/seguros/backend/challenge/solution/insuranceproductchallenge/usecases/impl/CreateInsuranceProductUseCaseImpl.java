@@ -1,7 +1,7 @@
 package br.com.itau.seguros.backend.challenge.solution.insuranceproductchallenge.usecases.impl;
 
 import br.com.itau.seguros.backend.challenge.solution.insuranceproductchallenge.Infrastructure.persistence.entity.InsuranceProductEntity;
-import br.com.itau.seguros.backend.challenge.solution.insuranceproductchallenge.Infrastructure.persistence.repository.InsuranceProductRepository;
+import br.com.itau.seguros.backend.challenge.solution.insuranceproductchallenge.Infrastructure.persistence.repository.ProductRepository;
 import br.com.itau.seguros.backend.challenge.solution.insuranceproductchallenge.domain.InsuranceProduct;
 import br.com.itau.seguros.backend.challenge.solution.insuranceproductchallenge.service.TariffCalculationStrategy;
 import br.com.itau.seguros.backend.challenge.solution.insuranceproductchallenge.service.factory.TariffCalculationStrategyFactory;
@@ -14,10 +14,10 @@ import java.math.BigDecimal;
 public class CreateInsuranceProductUseCaseImpl implements CreateInsuranceProductUseCase {
 
     private final TariffCalculationStrategyFactory strategyFactory;
-    private final InsuranceProductRepository productRepository;
+    private final ProductRepository productRepository;
 
     public CreateInsuranceProductUseCaseImpl(TariffCalculationStrategyFactory strategyFactory,
-                                             InsuranceProductRepository productRepository) {
+                                             ProductRepository productRepository) {
         this.strategyFactory = strategyFactory;
         this.productRepository = productRepository;
     }
