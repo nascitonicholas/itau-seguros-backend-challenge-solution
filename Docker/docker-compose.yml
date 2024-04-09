@@ -2,7 +2,7 @@ version: '3'
 
 services:
   mysql:
-    image: mysql:5.7
+    image: mysql:8.0.33
     command: --innodb-use-native-aio=0
     container_name: segurosdb
     restart: always
@@ -14,6 +14,8 @@ services:
       - MYSQL_ROOT_PASSWORD=root
     networks:
       - javanet
+    ports:
+      - "3306:3306"
 
 networks:
   javanet:

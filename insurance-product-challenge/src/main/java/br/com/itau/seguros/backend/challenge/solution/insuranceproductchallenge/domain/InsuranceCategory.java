@@ -6,4 +6,13 @@ public enum InsuranceCategory {
     VIAGEM,
     RESIDENCIAL,
     PATRIMONIAL;
+
+    public static boolean isValidCategory(String category) {
+        boolean isValidCategory = Boolean.FALSE;
+        for(InsuranceCategory item : InsuranceCategory.values()) {
+            if(item.name().equalsIgnoreCase(category))
+                isValidCategory = Boolean.TRUE;
+        }
+        return isValidCategory;
+    }
 }

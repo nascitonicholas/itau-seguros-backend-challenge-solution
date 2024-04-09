@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS products (
+CREATE TABLE IF NOT EXISTS insurance_products (
   id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
   name VARCHAR(255),
   category_name VARCHAR(255),
