@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:5.7
+    command: --innodb-use-native-aio=0
+    container_name: segurosdb
+    restart: always
+    tty: true
+    volumes:
+      - ./scripts:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_DATABASE=segurosdb
+      - MYSQL_ROOT_PASSWORD=root
+    networks:
+      - javanet
+
+networks:
+  javanet:
+    driver: bridge
