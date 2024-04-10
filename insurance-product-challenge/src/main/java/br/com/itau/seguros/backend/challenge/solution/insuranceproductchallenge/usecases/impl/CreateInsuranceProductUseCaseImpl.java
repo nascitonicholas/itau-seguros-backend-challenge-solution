@@ -2,10 +2,12 @@ package br.com.itau.seguros.backend.challenge.solution.insuranceproductchallenge
 
 import br.com.itau.seguros.backend.challenge.solution.insuranceproductchallenge.Infrastructure.persistence.entity.InsuranceProductEntity;
 import br.com.itau.seguros.backend.challenge.solution.insuranceproductchallenge.Infrastructure.persistence.repository.ProductRepository;
+import br.com.itau.seguros.backend.challenge.solution.insuranceproductchallenge.adapters.response.InsuranceProductResponse;
 import br.com.itau.seguros.backend.challenge.solution.insuranceproductchallenge.domain.InsuranceProduct;
 import br.com.itau.seguros.backend.challenge.solution.insuranceproductchallenge.service.TariffCalculationStrategy;
 import br.com.itau.seguros.backend.challenge.solution.insuranceproductchallenge.service.factory.TariffCalculationStrategyFactory;
 import br.com.itau.seguros.backend.challenge.solution.insuranceproductchallenge.usecases.CreateInsuranceProductUseCase;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -23,7 +25,8 @@ public class CreateInsuranceProductUseCaseImpl implements CreateInsuranceProduct
     }
 
     @Override
-    public BigDecimal execute(InsuranceProduct product) {
+    @Cacheable(value = "insuranceProducts", key = "#product.name + '_' + #product.category + '_' + #product.basePrice")
+    public InsuranceProductResponse execute(InsuranceProduct product) {
         TariffCalculationStrategy calculationStrategy = strategyFactory.getStrategy(product.getCategory());
         BigDecimal tariffedPrice = calculationStrategy.calculate(product.getBasePrice());
 
@@ -31,10 +34,17 @@ public class CreateInsuranceProductUseCaseImpl implements CreateInsuranceProduct
                 .name(product.getName())
                 .category(product.getCategory())
                 .basePrice(product.getBasePrice())
+                .tariffedPrice(tariffedPrice)
                 .build();
 
-        productRepository.save(productEntity);
+        InsuranceProductEntity productSaved = productRepository.save(productEntity);
 
-        return tariffedPrice;
+        return InsuranceProductResponse.builder()
+                .id(productSaved.getId().toString())
+                .name(productSaved.getName())
+                .category(productSaved.getCategory().name())
+                .basePrice(productSaved.getBasePrice())
+                .tariffedPrice(productSaved.getTariffedPrice())
+                .build();
     }
 }

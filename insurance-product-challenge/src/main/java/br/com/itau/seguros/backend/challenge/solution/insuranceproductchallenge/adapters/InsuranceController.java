@@ -7,6 +7,7 @@ import br.com.itau.seguros.backend.challenge.solution.insuranceproductchallenge.
 import br.com.itau.seguros.backend.challenge.solution.insuranceproductchallenge.domain.InsuranceProduct;
 import br.com.itau.seguros.backend.challenge.solution.insuranceproductchallenge.usecases.CreateInsuranceProductUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +27,7 @@ public class InsuranceController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createInsuranceProduct(@RequestBody InsuranceProductRequest request) {
+    public ResponseEntity<?> createInsuranceProducts(@RequestBody InsuranceProductRequest request) {
         try {
             request.validated();
             InsuranceProduct quote = new InsuranceProduct(request.getName(), InsuranceCategory.valueOf(request.getCategory()), request.getBasePrice());
@@ -34,7 +35,7 @@ public class InsuranceController {
         } catch (ValidateBodyException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(InsuranceProductErrorResponse.builder().errorMessage(e.getMessage()).build());
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
+            return ResponseEntity.internalServerError().body(InsuranceProductErrorResponse.builder().errorMessage(e.getClass().getName()).build());
         }
     }
 }

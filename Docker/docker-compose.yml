@@ -1,6 +1,12 @@
 version: '3'
 
 services:
+  redis:
+    image: redis
+    networks:
+      - javanet
+    ports:
+      - "6379:6379"
   mysql:
     image: mysql:8.0.33
     command: --innodb-use-native-aio=0

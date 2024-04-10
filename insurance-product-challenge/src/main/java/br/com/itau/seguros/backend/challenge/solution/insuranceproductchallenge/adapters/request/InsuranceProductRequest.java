@@ -26,7 +26,7 @@ public class InsuranceProductRequest {
     public void validated() {
         if(Objects.isNull(this.name) || this.name.trim().isEmpty()) throw new ValidateBodyException("Obrigatório informar um nome para o produto.");
         if(Objects.isNull(this.category) || this.category.trim().isEmpty() || !isValidCategory(this.category)) throw new ValidateBodyException("Obrigatório informar uma categoria válida.");
-        if(Objects.isNull(this.basePrice) || BigDecimal.ZERO.compareTo(basePrice) <= 0) throw new ValidateBodyException("Obrigatório informar um preço base maior que zero.");
+        if(Objects.isNull(this.basePrice) || BigDecimal.ZERO.compareTo(basePrice) >= 0) throw new ValidateBodyException("Obrigatório informar um preço base maior que zero.");
     }
 
 }
