@@ -4,5 +4,5 @@ import br.com.itau.seguros.backend.challenge.solution.insuranceproductchallenge.
 import br.com.itau.seguros.backend.challenge.solution.insuranceproductchallenge.domain.InsuranceProduct;
 
 public interface CreateInsuranceProductUseCase {
-    InsuranceProductResponse execute(InsuranceProduct quote);
+    InsuranceProductResponse execute(InsuranceProduct product);
 }

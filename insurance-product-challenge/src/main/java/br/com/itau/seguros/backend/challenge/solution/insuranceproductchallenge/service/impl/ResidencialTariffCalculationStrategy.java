@@ -12,9 +12,8 @@ public class ResidencialTariffCalculationStrategy implements TariffCalculationSt
     @Override
     public BigDecimal calculate(BigDecimal basePrice) {
         double iof = 0.04;
-        double pis = 0.0;
         double cofins = 0.03;
-        return basePrice.add(basePrice.multiply(BigDecimal.valueOf(iof))).add(basePrice.multiply(BigDecimal.valueOf(pis))).add(basePrice.multiply(BigDecimal.valueOf(cofins)));
+        return basePrice.add(basePrice.multiply(BigDecimal.valueOf(iof))).add(basePrice.multiply(BigDecimal.valueOf(cofins)));
     }
 
     @Override

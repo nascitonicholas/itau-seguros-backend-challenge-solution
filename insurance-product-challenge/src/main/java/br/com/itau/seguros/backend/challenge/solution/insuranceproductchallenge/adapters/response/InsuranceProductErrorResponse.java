@@ -1,11 +1,9 @@
 package br.com.itau.seguros.backend.challenge.solution.insuranceproductchallenge.adapters.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+@Getter
 @Setter
 @Builder
 @NoArgsConstructor

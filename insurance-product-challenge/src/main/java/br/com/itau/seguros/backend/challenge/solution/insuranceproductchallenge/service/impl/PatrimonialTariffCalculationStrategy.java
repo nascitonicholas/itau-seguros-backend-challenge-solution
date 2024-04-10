@@ -13,8 +13,7 @@ public class PatrimonialTariffCalculationStrategy implements TariffCalculationSt
     public BigDecimal calculate(BigDecimal basePrice) {
         double iof = 0.05;
         double pis = 0.03;
-        double cofins = 0.0;
-        return basePrice.add(basePrice.multiply(BigDecimal.valueOf(iof))).add(basePrice.multiply(BigDecimal.valueOf(pis))).add(basePrice.multiply(BigDecimal.valueOf(cofins)));
+        return basePrice.add(basePrice.multiply(BigDecimal.valueOf(iof))).add(basePrice.multiply(BigDecimal.valueOf(pis)));
     }
 
     @Override
