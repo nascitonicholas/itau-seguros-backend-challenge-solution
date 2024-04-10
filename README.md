@@ -9,6 +9,7 @@ Repository created with the aim of solving [Itau's public challenge](https://git
 - Docker Instalado, [link para documentação](https://docs.docker.com/get-docker/)
 - Docker-compose Instalado, [link para documentação](https://docs.docker.com/compose/install/)
 - Git Instalado, [link para documentação](https://git-scm.com/book/pt-br/v2/Começando-Instalando-o-Git)
+- No diretório Docker, dentro do diretório raiz do repositório, acessar o subdiretório prometheus e alterar o arquivo prometheus.yml para receber o ip de sua máquina no lugar demarcado.
 
 ## Execução
 Após realizar a instalação dos pré-requisitos, no diretório de sua preferência, realize o clone do projeto seguindo o comando abaixo:
