@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.RoundingMode;
+import java.util.Locale;
 
 @RestController
 @RequestMapping("/insurance-products")
@@ -31,7 +32,7 @@ public class InsuranceController {
     public ResponseEntity<?> createInsuranceProducts(@RequestBody InsuranceProductRequest request) {
         try {
             request.validated();
-            InsuranceProduct quote = new InsuranceProduct(request.getName(), InsuranceCategory.valueOf(request.getCategory()), request.getBasePrice().setScale(2, RoundingMode.HALF_UP));
+            InsuranceProduct quote = new InsuranceProduct(request.getName(), InsuranceCategory.valueOf(request.getCategory().toUpperCase()), request.getBasePrice().setScale(2, RoundingMode.HALF_UP));
             return ResponseEntity.status(HttpStatus.CREATED).body(createInsuranceProductUseCase.execute(quote));
         } catch (ValidateBodyException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(InsuranceProductErrorResponse.builder().errorMessage(e.getMessage()).build());
