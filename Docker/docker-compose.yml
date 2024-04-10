@@ -1,0 +1,95 @@
+version: '3'
+
+services:
+#  insurance-product-challenge:
+#    build:
+#      context: ../insurance-product-challenge/
+#    entrypoint: dockerize -wait tcp://segurosdb:3306 -timeout 20s sh -c "mvn clean install -Dmaven.test.skip=true && java -jar ./target/insurance-product-challenge-0.0.1-SNAPSHOT.jar"
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - elasticsearch
+#      - mysql
+#      - prometheus
+#      - redis
+#      - grafana
+#    tty: true
+#    logging:
+#      driver: json-file
+#      options:
+#        max-size: "10m"
+#        max-file: "5"
+#    volumes:
+#      - ../insurance-product-challenge:/usr/src/app
+#    networks:
+#      - javanet
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - prometheus_data:/prometheus
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    networks:
+      - javanet
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - ./grafa
+    networks:
+      - javanet
+
+  redis:
+    image: redis
+    networks:
+      - javanet
+    ports:
+      - "6379:6379"
+
+  mysql:
+    image: mysql:8.0.33
+    container_name: segurosdb
+    restart: always
+    tty: true
+    volumes:
+      - ./scripts:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_DATABASE=segurosdb
+      - MYSQL_ROOT_PASSWORD=root
+    networks:
+      - javanet
+    ports:
+      - "3306:3306"
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.1
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.17.1
+    depends_on:
+      - elasticsearch
+    ports:
+      - "5601:5601"
+
+networks:
+  javanet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.64.1/16
+
+volumes:
+  prometheus_data:
+    driver: local
