@@ -1,29 +1,6 @@
 version: '3'
 
 services:
-#  insurance-product-challenge:
-#    build:
-#      context: ../insurance-product-challenge/
-#    entrypoint: dockerize -wait tcp://segurosdb:3306 -timeout 20s sh -c "mvn clean install -Dmaven.test.skip=true && java -jar ./target/insurance-product-challenge-0.0.1-SNAPSHOT.jar"
-#    ports:
-#      - "8080:8080"
-#    depends_on:
-#      - elasticsearch
-#      - mysql
-#      - prometheus
-#      - redis
-#      - grafana
-#    tty: true
-#    logging:
-#      driver: json-file
-#      options:
-#        max-size: "10m"
-#        max-file: "5"
-#    volumes:
-#      - ../insurance-product-challenge:/usr/src/app
-#    networks:
-#      - javanet
-
   prometheus:
     image: prom/prometheus
     ports:
