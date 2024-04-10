@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 @Service
 public class CreateInsuranceProductUseCaseImpl implements CreateInsuranceProductUseCase {
@@ -33,8 +34,8 @@ public class CreateInsuranceProductUseCaseImpl implements CreateInsuranceProduct
         InsuranceProductEntity productEntity = InsuranceProductEntity.builder()
                 .name(product.getName())
                 .category(product.getCategory())
-                .basePrice(product.getBasePrice())
-                .tariffedPrice(tariffedPrice)
+                .basePrice(product.getBasePrice().setScale(2, RoundingMode.HALF_UP))
+                .tariffedPrice(tariffedPrice.setScale(2, RoundingMode.HALF_UP))
                 .build();
 
         InsuranceProductEntity productSaved = productRepository.save(productEntity);

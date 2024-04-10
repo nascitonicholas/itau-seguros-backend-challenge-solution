@@ -9,7 +9,6 @@ services:
       - "6379:6379"
   mysql:
     image: mysql:8.0.33
-    command: --innodb-use-native-aio=0
     container_name: segurosdb
     restart: always
     tty: true
